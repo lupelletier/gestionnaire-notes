@@ -73,6 +73,21 @@
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.mark-rouge {
+  background-color: red;
+}
+
+.mark-orange {
+  background-color: orange;
+}
+
+.mark-jaune {
+  background-color: yellow;
+}
+
+.mark-vert {
+  background-color: green;
+}
 
 @keyframes logo-spin {
   from {

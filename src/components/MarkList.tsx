@@ -2,15 +2,23 @@ import { useState } from 'react';
 import { Mark } from '../interfaces';
 import MarkCard from './MarkCard';
 
-interface MarkListProps {
-    marks: Mark[];
-}
-
-function MarkList({ marks }: MarkListProps) {
+function MarkList({ marks }: { marks: Mark[] }) {
     const [selectedMark, setSelectedMark] = useState<Mark | null>(null);
 
     function handleMarkClick(mark: Mark) {
         setSelectedMark(mark);
+    }
+
+    function getMarkColorClass(mark: number): string {
+        if (mark < 8) {
+            return 'mark-rouge';
+        } else if (mark < 10) {
+            return 'mark-orange';
+        } else if (mark < 13) {
+            return 'mark-jaune';
+        } else {
+            return 'mark-vert';
+        }
     }
 
     return (
@@ -27,7 +35,7 @@ function MarkList({ marks }: MarkListProps) {
                 </thead>
                 <tbody>
                 {marks.map((mark, index) => (
-                    <tr key={index}>
+                    <tr key={index} className={getMarkColorClass(mark.mark)}>
                         <td>{mark.title}</td>
                         <td>{mark.comment}</td>
                         <td>{mark.mark}/20</td>
