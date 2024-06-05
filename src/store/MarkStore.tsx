@@ -1,4 +1,4 @@
-import create from 'zustand';
+import {create} from 'zustand';
 
 interface Mark {
     title: string;
@@ -20,7 +20,7 @@ const getMarksFromLocalStorage = (): Mark[] => {
 };
 
 export const useMarkStore = create<MarkStore>((set) => ({
-    marks: getMarksFromLocalStorage(),
+    marks: [],
 
     addMark: (mark) =>
         set((state) => {
