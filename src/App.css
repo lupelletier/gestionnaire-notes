@@ -18,6 +18,25 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.mark-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1em;
+}
+.mark-form-label {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
