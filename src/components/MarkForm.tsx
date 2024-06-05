@@ -1,39 +1,40 @@
 import React, { useState } from 'react';
-import { Mark } from '../interfaces';
+import {useMarkStore} from "../store/MarkStore.tsx";
 
 interface MarkFormProps {
-    onSubmit: (mark: Mark) => void;
+    onSubmit: () => void;
 }
 
-const MarkForm: React.FC<MarkFormProps> = ({ onSubmit }) => {
+function MarkForm({ onSubmit }: MarkFormProps) {
+    const addMark = useMarkStore((state) => state.addMark);
     const [title, setTitle] = useState('');
     const [comment, setComment] = useState('');
     const [mark, setMark] = useState<number | string>('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        onSubmit({ title, comment, mark: Number(mark) });
+        addMark({ title, comment, mark: Number(mark) });
         setTitle('');
         setComment('');
         setMark('');
-    };
+        onSubmit(); // Call the onSubmit prop to close the modal
+    }
 
     return (
-        <form onSubmit={handleSubmit} className={'mark-form'}>
+        <form onSubmit={handleSubmit} className="mark-form">
             <div>
-                <label className={'mark-form-label'}>
+                <label className="mark-form-label">
                     Title:
                     <input
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
-                        className={''}
                     />
                 </label>
             </div>
             <div>
-                <label className={'mark-form-label'}>
+                <label className="mark-form-label">
                     Comment:
                     <input
                         type="text"
@@ -44,7 +45,7 @@ const MarkForm: React.FC<MarkFormProps> = ({ onSubmit }) => {
                 </label>
             </div>
             <div>
-                <label className={'mark-form-label'}>
+                <label className="mark-form-label">
                     Mark (out of 20):
                     <input
                         type="number"
@@ -59,6 +60,6 @@ const MarkForm: React.FC<MarkFormProps> = ({ onSubmit }) => {
             <button type="submit">Add Mark</button>
         </form>
     );
-};
+}
 
 export default MarkForm;

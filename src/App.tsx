@@ -1,29 +1,33 @@
-import {useState} from "react";
-import {Mark} from "./interfaces.tsx";
-import MarkList from "./components/MarkList.tsx";
-import MarkForm from "./components/MarkForm.tsx";
-import Modal from "./components/Modal.tsx";
-import "./App.css";
+import { useEffect, useState } from 'react';
+import MarkList from './components/MarkList';
+import MarkForm from './components/MarkForm';
+import Modal from './components/Modal';
+import './App.css';
+import {useMarkStore} from "./store/MarkStore.tsx";
 
-export default function App(){
-    const [marks, setMarks] = useState<Mark[]>([]);
+export default function App() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const addMark = (newMark: Mark) => {
-        setMarks([...marks, newMark]);
+    const marks = useMarkStore((state) => state.marks);
+    const loadMarks = useMarkStore((state) => state.loadMarks);
+
+    useEffect(() => {
+        loadMarks();
+    }, [loadMarks]);
+
+    const closeModal = () => {
         setIsModalOpen(false);
     };
 
     return (
-        <div id="app" className="">
+        <div id="app">
             <button onClick={() => setIsModalOpen(true)}>Add Mark</button>
             <MarkList marks={marks} />
             {isModalOpen && (
-                <Modal onClose={() => setIsModalOpen(false)}>
-                    <MarkForm onSubmit={addMark} />
+                <Modal onClose={closeModal}>
+                    <MarkForm onSubmit={closeModal} />
                 </Modal>
             )}
         </div>
     );
-
 }
